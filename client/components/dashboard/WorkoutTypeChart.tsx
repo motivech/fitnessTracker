@@ -53,7 +53,7 @@ export function WorkoutTypeChart({ workouts }: WorkoutTypeChartProps) {
     } else {
       // Если нет данных, создаем пустой набор
       setChartData([
-        { name: 'Нет данных', value: 1 }
+        { name: 'Нет данных', value: 0 }
       ])
     }
   }, [workouts]);
