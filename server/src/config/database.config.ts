@@ -10,7 +10,7 @@ import { Activity } from '../entities/Activity';
 
 export const databaseConfig: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: 'localhost',
+  host: process.env.DB_HOST ?? 'localhost',
   port: 5432,
   username: 'postgres',
   password: '123',
