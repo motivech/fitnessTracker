@@ -108,20 +108,9 @@ const ExerciseDetail = ({ exercise, isSelected, onToggle }: {
 }) => {
   return (
     <div 
-      className={cn(
-        "flex items-start p-3 rounded-md text-sm border",
-        isSelected 
-          ? "bg-primary/10 border-primary" 
-          : "hover:bg-accent border-border"
-      )}
-      onClick={onToggle}
+      className={
+        "flex items-start p-3 rounded-md text-sm border"}
     >
-      <Checkbox 
-        checked={isSelected}
-        onCheckedChange={onToggle}
-        className="mr-3 mt-0.5"
-      />
-      
       <div className="flex-1">
         <div className="flex items-center justify-between">
           <div className="font-medium">{exercise.exercise?.name || "Упражнение"}</div>
@@ -388,91 +377,6 @@ export default function WorkoutsPage() {
         variant: 'destructive'
       })
     })
-  }
-  
-  const addToActiveWorkouts = async (workout: Workout) => {
-    try {
-      // Используем функцию из сервиса
-      await addWorkoutToActive(workout.id)
-      
-      // Обновляем список активных тренировок
-      fetchWorkoutHistory()
-      
-      toast({
-        title: "Тренировка начата",
-        description: "Тренировка добавлена в список активных",
-      })
-    } catch (error) {
-      console.error("Ошибка при добавлении в активные:", error)
-      toast({
-        title: 'Ошибка',
-        description: 'Не удалось добавить тренировку в активные',
-        variant: 'destructive'
-      })
-    }
-  }
-  
-  const scheduleWorkoutPlan = (workout: Workout) => {
-    setSelectedWorkout(workout)
-    setIsViewDialogOpen(false)
-    router.push(`/workouts/${workout.id}/schedule`)
-  }
-  
-  const handleExerciseCompletion = (exerciseId: string, completed: boolean) => {
-    setCurrentWorkoutProgress(prev => 
-      prev.map(ex => ex.id === exerciseId ? {...ex, completed} : ex)
-    )
-  }
-  
-  const completeWorkout = async () => {
-    const completedCount = currentWorkoutProgress.filter(ex => ex.completed).length
-    const totalExercises = currentWorkoutProgress.length
-    const completionPercentage = totalExercises > 0 ? (completedCount / totalExercises) * 100 : 100
-    
-    try {
-      if (!selectedWorkout) return
-      
-      console.log("Завершаем тренировку: ", selectedWorkout.name);
-      console.log("Прогресс упражнений: ", currentWorkoutProgress);
-      
-      // Создаем объект с данными о прогрессе тренировки с полной информацией об упражнениях
-      const workoutData = {
-        workoutId: selectedWorkout.id,
-        date: format(new Date(), "yyyy-MM-dd"),
-        // Передаем полный массив упражнений с информацией о выполнении
-        completedExercises: currentWorkoutProgress,
-        completionPercentage,
-        timeSpent: selectedWorkout.duration,
-        caloriesBurned: selectedWorkout.calories
-      }
-      
-      // Используем функцию из сервиса для сохранения полных данных
-      const result = await completeWorkoutService(workoutData)
-      console.log("Результат завершения тренировки:", result);
-      
-      // Обновляем локальный список активных тренировок
-      setActiveWorkouts(prev => 
-        prev.filter(w => w.id !== selectedWorkout.id)
-      )
-      
-      // Закрываем модальное окно
-      setIsViewDialogOpen(false)
-      
-      // Обновляем историю тренировок, чтобы сразу отобразить завершенную тренировку
-      fetchWorkoutHistory()
-      
-      toast({
-        title: "Тренировка завершена",
-        description: `Вы выполнили ${completionPercentage.toFixed(0)}% упражнений`,
-      })
-    } catch (error) {
-      console.error("Ошибка при завершении тренировки:", error)
-      toast({
-        title: "Ошибка",
-        description: "Не удалось завершить тренировку",
-        variant: "destructive"
-      })
-    }
   }
   
   const addExerciseToWorkout = async () => {
@@ -927,42 +831,11 @@ export default function WorkoutsPage() {
                       <DialogHeader>
                         <DialogTitle>Добавить упражнение</DialogTitle>
                         <DialogDescription>
-                          Выберите упражнение из списка или добавьте своё
+                          Выберите упражнение из списка
                         </DialogDescription>
                       </DialogHeader>
                       <div className="space-y-4 py-4">
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between mb-2">
-                            <Label htmlFor="exercise-type">Тип упражнения</Label>
-                            <div className="flex space-x-2">
-                              <Button
-                                type="button"
-                                variant={!newExerciseForm.isCustom ? "default" : "outline"}
-                                size="sm"
-                                onClick={() => setNewExerciseForm({
-                                  ...newExerciseForm, 
-                                  isCustom: false,
-                                  exerciseId: newExerciseForm.exerciseId,
-                                  customExerciseName: ""
-                                })}
-                              >
-                                Из списка
-                              </Button>
-                              <Button
-                                type="button"
-                                variant={newExerciseForm.isCustom ? "default" : "outline"}
-                                size="sm"
-                                onClick={() => setNewExerciseForm({
-                                  ...newExerciseForm, 
-                                  isCustom: true,
-                                  exerciseId: "",
-                                  customExerciseName: newExerciseForm.customExerciseName
-                                })}
-                              >
-                                Своё
-                              </Button>
-                            </div>
-                          </div>
                           
                           {newExerciseForm.isCustom ? (
                             <div className="space-y-2">
@@ -1119,15 +992,6 @@ export default function WorkoutsPage() {
                       <Plus className="mr-2 h-4 w-4" />
                       Создать тренировку
                     </Button>
-                    <Button variant="outline" onClick={() => {
-                      const tabElement = document.querySelector('[value="public"]');
-                      if (tabElement instanceof HTMLElement) {
-                        tabElement.click();
-                      }
-                    }} className="flex items-center">
-                      <Search className="mr-2 h-4 w-4" />
-                      Готовые тренировки
-                    </Button>
                   </div>
                   <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 p-4 max-w-md">
                     <div className="flex items-center">
@@ -1203,7 +1067,6 @@ export default function WorkoutsPage() {
                             <TableHead>Дата</TableHead>
                             <TableHead>Тренировка</TableHead>
                             <TableHead>Длительность</TableHead>
-                            <TableHead>Тип</TableHead>
                             <TableHead className="text-right">Завершено</TableHead>
                           </TableRow>
                         </TableHeader>
@@ -1222,9 +1085,6 @@ export default function WorkoutsPage() {
                               </TableCell>
                               <TableCell className="font-medium">{item.workout?.name}</TableCell>
                               <TableCell>{item.workout?.durationMinutes || item.workout?.duration || 0} мин</TableCell>
-                              <TableCell>
-                                <Badge variant="outline">{item.workout?.type}</Badge>
-                              </TableCell>
                               <TableCell className="text-right">
                                 <div className="flex items-center justify-end gap-2">
                                   <Progress 

@@ -129,8 +129,7 @@ export default function CalendarPage() {
         // Получаем активные программы тренировок пользователя
         const userPrograms = await getUserActivePrograms()
         
-        console.log("Активные программы:", userPrograms)
-        
+
         setAvailableWorkouts(workouts)
         setAvailablePrograms(programs)
         setActivePrograms(userPrograms)
@@ -161,7 +160,6 @@ export default function CalendarPage() {
     
     if (shouldRefresh && user) {
       // Если есть параметр refresh, выполняем полное обновление данных
-      console.log("Обнаружен параметр refresh=true, выполняем полное обновление данных")
       const fullRefresh = async () => {
         try {
           setIsLoading(true)
@@ -241,14 +239,12 @@ export default function CalendarPage() {
       // Если это тренировка из программы, загружаем детали тренировки
       // для получения упражнений
       if (workout.workoutId && (!workout.workout?.exercises || workout.workout.exercises.length === 0)) {
-        console.log(`Загружаем детали тренировки для ${workout.workoutId}`);
-        
+
         // Делаем асинхронный запрос для загрузки упражнений
         getWorkoutDetails(workout.workoutId)
           .then(details => {
             if (details && details.exercises && details.exercises.length > 0) {
-              console.log(`Загружено ${details.exercises.length} упражнений для программной тренировки`);
-              
+
               // Обновляем тренировку с загруженными упражнениями
               setSelectedScheduledWorkout(prevWorkout => {
                 if (!prevWorkout) return prevWorkout;

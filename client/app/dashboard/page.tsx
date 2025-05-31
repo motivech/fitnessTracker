@@ -419,7 +419,7 @@ export default function DashboardPage() {
                             <p className="text-[10px] md:text-sm text-muted-foreground">
                               {workout.createdAt && typeof workout.createdAt === 'string' && workout.createdAt !== 'Invalid Date' && isValid(new Date(workout.createdAt))
                                 ? format(new Date(workout.createdAt), 'PPP', { locale: ru })
-                                : 'Дата не указана'}
+                                : ''}
                             </p>
                           </div>
                           <div className="ml-auto font-medium text-xs md:text-sm">
@@ -635,7 +635,7 @@ export default function DashboardPage() {
                             <p className="text-xs md:text-sm text-muted-foreground">
                               {workout.createdAt && typeof workout.createdAt === 'string' && workout.createdAt !== 'Invalid Date' && isValid(new Date(workout.createdAt))
                                 ? format(new Date(workout.createdAt), 'PPP', { locale: ru })
-                                : 'Дата не указана'}
+                                : ''}
                             </p>
                           </div>
                         </div>
@@ -717,14 +717,7 @@ export default function DashboardPage() {
                   <p className="text-muted-foreground">Калории</p>
                   <p className="font-medium">{selectedWorkout.calories} ккал</p>
                 </div>
-                <div className="space-y-1">
-                  <p className="text-muted-foreground">Дата</p>
-                  <p className="font-medium">
-                    {selectedWorkout.createdAt && typeof selectedWorkout.createdAt === 'string' && selectedWorkout.createdAt !== 'Invalid Date' && isValid(new Date(selectedWorkout.createdAt))
-                      ? format(new Date(selectedWorkout.createdAt), 'PPP', { locale: ru })
-                      : 'Дата не указана'}
-                  </p>
-                </div>
+
               </div>
               
               <div className="space-y-3 md:space-y-4">
@@ -754,16 +747,6 @@ export default function DashboardPage() {
                             <span className="bg-background px-1.5 py-0.5 md:px-2 rounded">
                               {exercise.reps} повт.
                             </span>
-                            {exercise.weight && (
-                              <span className="bg-background px-1.5 py-0.5 md:px-2 rounded ml-1 md:ml-2">
-                                {exercise.weight} кг
-                              </span>
-                            )}
-                            {exercise.duration && (
-                              <span className="bg-background px-1.5 py-0.5 md:px-2 rounded ml-1 md:ml-2">
-                                {exercise.duration} сек
-                              </span>
-                            )}
                           </div>
                         </div>
                       </div>
