@@ -22,6 +22,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
+import { API_URL } from '@/lib/constants';
 
 interface Workout {
   id: string
@@ -66,7 +67,7 @@ export default function WorkoutsPage() {
     try {
       const token = localStorage.getItem('token')
       
-      const response = await fetch('http://localhost:8000/workouts', {
+      const response = await fetch(`${API_URL}/workouts`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -97,7 +98,7 @@ export default function WorkoutsPage() {
     try {
       const token = localStorage.getItem('token')
       
-      const response = await fetch('http://localhost:8000/workouts', {
+      const response = await fetch(`${API_URL}/workouts`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { API_URL } from '@/lib/constants';
 
 interface UserProfile {
   id: string
@@ -46,7 +47,7 @@ export default function ProfilePage() {
     try {
       const token = localStorage.getItem('token')
       
-      const response = await fetch('http://localhost:8000/profile', {
+      const response = await fetch(`${API_URL}/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -92,7 +93,7 @@ export default function ProfilePage() {
     try {
       const token = localStorage.getItem('token')
       
-      const response = await fetch('http://localhost:8000/profile', {
+      const response = await fetch(`${API_URL}/profile`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
