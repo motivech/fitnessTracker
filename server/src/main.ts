@@ -58,7 +58,7 @@ async function bootstrap() {
   
   // Расширенные настройки CORS для решения проблем с аутентификацией
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:3000'], // Разрешенные источники
+    origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://194.67.84.159'], // Разрешенные источнки
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true, // Разрешить передачу куки и заголовков авторизации
     allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization,Access-Control-Allow-Headers',

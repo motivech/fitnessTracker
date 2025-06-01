@@ -11,6 +11,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   api:
+    container_name: api
     build: ./server
     ports:
       - '8000:8000'

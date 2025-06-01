@@ -1,5 +1,5 @@
 // API URL для бэкенда
-export const API_URL = 'http://api:8000';
+export const API_URL = 'http://194.67.84.159:8000';
 export const AUTH_API = {
   LOGIN: '/auth/login',
   REGISTER: '/auth/register',
